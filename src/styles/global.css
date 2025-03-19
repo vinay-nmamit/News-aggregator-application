@@ -1,0 +1,94 @@
+body {
+  background-color: #f8f9fa;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 100%; 
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.login-card {
+  width: 90%;
+  height: 90%;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+
+  /* Add background image */
+  background-image: url('../assets/world_map.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner-card {
+  width: 50%;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.8); 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* Smooth transition */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Slide in effect */
+.slide-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide out effect */
+.slide-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.login-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+button {
+  width: 50%;
+  padding: 0.75rem;
+  background-color: #0d6efd;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #0b5ed7;
+}
+
+.register {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}

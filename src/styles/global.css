@@ -6,7 +6,6 @@
   font-family: 'Poppins', sans-serif;
 }
 
-
 body {
   background-color: #f8f9fa;
   height: 100vh;
@@ -14,86 +13,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.login-container {
-  width: 100%; 
-  height: 100vh;
-  position: fixed;
-  right: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-}
-
-.login-card {
-  width: 90%;
-  height: 90%;
-  padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 12px;
-
-  /* Add background image */
-  background-image: url('../assets/world_map.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #ffffff;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.inner-card {
-  width: 50%;
-  padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.8); 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.login-button {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-button {
-  width: 50%;
-  padding: 0.75rem;
-  background-color: #0d6efd;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-button:hover {
-  background-color: #0b5ed7;
-}
-
-.register {
-  display: flex;
-  justify-content: center;
-  margin: 1rem;
-}
-
-/* Home container */
-.home-container {
-  display: flex;
-  height: 100vh;
-  background-color: #ddd;
-  width: 100vw;
 }
 
 /* Sidebar styling */
@@ -134,7 +53,7 @@ button:hover {
 
 .sidebar ul li:hover {
   background-color: #333;
-  transform: translateX(8px); /* Moves the item slightly to the right */
+  transform: translateX(8px);
 }
 
 .sidebar ul li svg {
@@ -142,9 +61,46 @@ button:hover {
   font-size: 20px;
 }
 
-/* Main content next to sidebar */
-.content {
-  margin-left: 250px; /* Adjust based on sidebar width */
-  padding: 20px;
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.chevron {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.sublist {
+  padding-left: 20px;
+  list-style-type: none;
+  margin-top: 8px;
+  transition: max-height 0.3s ease;
+}
+
+.sublist li {
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #ddd;
+  cursor: pointer;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.sublist li:hover {
+  background-color: #333;
+  padding-left: 16px;
+}
+
+/* Home container */
+.home-container {
+  display: flex;
+  height: 100vh;
+  background-color: #ddd;
+  width: 100vw;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}

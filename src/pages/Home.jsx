@@ -1,4 +1,5 @@
 import Sidebar from '../components/Sidebar';
+import "../styles/global.css";
 
 function Home() {
   return (
@@ -6,7 +7,7 @@ function Home() {
       <Sidebar />
       <div className="content">
         <h1>Latest News</h1>
-        {/* Add other content here */}
+        {/* Add your content here */}
       </div>
     </div>
   );

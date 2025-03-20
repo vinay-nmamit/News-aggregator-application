@@ -5,7 +5,7 @@ function Home() {
     <div className="home-container">
       <Sidebar />
       <div className="content">
-        <h1>Welcome to the News Application!</h1>
+        <h1>Latest News</h1>
         {/* Add other content here */}
       </div>
     </div>

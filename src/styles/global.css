@@ -1,4 +1,5 @@
 body {
+  font-family: 'Poppins', sans-serif;
   background-color: #f8f9fa;
   height: 100vh;
   margin: 0;
@@ -92,3 +93,50 @@ button:hover {
   justify-content: center;
   margin: 1rem;
 }
+
+/* Home container */
+.home-container {
+  display: flex;
+  height: 100vh;
+  background-color: #ddd;
+  width: 100vw;
+}
+
+/* Sidebar styling */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #111;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar li:hover {
+  background-color: #333;
+}
+
+/* Main content next to sidebar */
+.content {
+  margin-left: 250px; /* Adjust based on sidebar width */
+  padding: 20px;
+}
+

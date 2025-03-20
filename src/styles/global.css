@@ -11,13 +11,12 @@ body {
   height: 100vh;
   margin: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-/* Login container */
+
+/* ✅ Login container */
 .login-container {
-  width: 100%; 
+  width: 100%;
   height: 100vh;
   position: fixed;
   right: 0;
@@ -34,14 +33,11 @@ body {
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 12px;
-
-  /* Add background image */
   background-image: url('../assets/world_map.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-color: #ffffff;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +46,7 @@ body {
 .inner-card {
   width: 50%;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   display: flex;
@@ -88,8 +84,7 @@ button:hover {
   margin: 1rem;
 }
 
-
-/* Sidebar styling */
+/* ✅ Sidebar styling */
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -166,7 +161,7 @@ button:hover {
   padding-left: 16px;
 }
 
-/* Home container */
+/* ✅ Home container */
 .home-container {
   display: flex;
   height: 100vh;
@@ -179,18 +174,18 @@ button:hover {
   padding: 20px;
 }
 
-/* Header container */
+/* ✅ Header container */
 .header {
   display: flex;
-  width: calc(100vw - 300px); /* Adjust width to exclude sidebar */
+  width: calc(100vw - 300px); /* Adjust for sidebar */
   align-items: center;
   justify-content: space-between;
-  /* background-color: #0b5ed7; */
+  /* background-color: #0d6efd;  */
   padding: 12px 20px;
-  box-sizing: border-box; /* Include padding in width */
+  box-sizing: border-box;
 }
 
-/* Search bar styling */
+/* ✅ Search bar styling */
 .search-bar {
   display: flex;
   align-items: center;
@@ -207,17 +202,17 @@ button:hover {
   font-size: 16px;
   border-radius: 24px 0 0 24px;
   outline: none;
-  background-color: #333; /* Dark gray to match sidebar hover */
+  background-color: #333;
   color: #fff;
 }
 
 .search-bar input::placeholder {
-  color: #bbb; /* Light gray for placeholder */
+  color: #bbb;
 }
 
 .search-bar button {
   padding: 10px 20px;
-  background-color: #0b5ed7; /* Blue to match header */
+  background-color: #1a73e8;
   color: #ffffff;
   border: none;
   border-radius: 0 24px 24px 0;
@@ -227,10 +222,5 @@ button:hover {
 }
 
 .search-bar button:hover {
-  background-color: #1a73e8; /* Lighter blue on hover */
+  background-color: #0b5ed7;
 }
-
-
-
-
-

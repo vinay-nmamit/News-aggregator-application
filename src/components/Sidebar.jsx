@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../styles/global.css";
 import { FaHome, FaFire, FaList, FaCog, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -10,51 +10,103 @@ function Sidebar() {
     <div className="sidebar">
       <h2>News Application</h2>
       <ul>
-        <Link to="/home" style={{ color: 'inherit', textDecoration: 'none' }}>
-          <li>
+        {/* Home Link */}
+        <NavLink 
+          to="/home"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          className={({ isActive }) => isActive ? 'active-link' : ''}
+        >
+          <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <FaHome /> Home
           </li>
-        </Link>
-        <Link to="/trending" style={{ color: 'inherit', textDecoration: 'none' }}>
-          <li>
+        </NavLink>
+
+        {/* Trending Link */}
+        <NavLink 
+          to="/trending"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          className={({ isActive }) => isActive ? 'active-link' : ''}
+        >
+          <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <FaFire /> Trending
           </li>
-        </Link>
-        <li onClick={() => setShowCategories(!showCategories)} className="category-item">
+        </NavLink>
+
+        {/* Categories Dropdown */}
+        <li 
+          onClick={() => setShowCategories(!showCategories)} 
+          className="category-item"
+          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+        >
           <FaList />
           Categories
           {showCategories ? <FaChevronUp className="chevron" /> : <FaChevronDown className="chevron" />}
         </li>
+
         {showCategories && (
           <ul className="sublist">
-            <Link to="/politics" style={{ color: 'inherit', textDecoration: 'none' }}>
+            <NavLink 
+              to="/politics" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Politics</li>
-            </Link>
-            <Link to="/business" style={{ color: 'inherit', textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink 
+              to="/business" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Business</li>
-            </Link>
-            <Link to="/tech" style={{ color: 'inherit', textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink 
+              to="/tech" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Tech</li>
-            </Link>
-            <Link to="/arts" style={{ color: 'inherit', textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink 
+              to="/arts" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Arts</li>
-            </Link>
-            <Link to="/science" style={{ color: 'inherit', textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink 
+              to="/science" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Science</li>
-            </Link>
-            <Link to="/health" style={{ color: 'inherit', textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink 
+              to="/health" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Health</li>
-            </Link>
-            <Link to="/sports" style={{ color: 'inherit', textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink 
+              to="/sports" 
+              style={{ color: 'inherit', textDecoration: 'none' }}
+              className={({ isActive }) => isActive ? 'active-link' : ''}
+            >
               <li>Sports</li>
-            </Link>
+            </NavLink>
           </ul>
         )}
-        <Link to="/settings" style={{ color: 'inherit', textDecoration: 'none' }}>
-          <li>
+
+        {/* Settings Link */}
+        <NavLink 
+          to="/settings"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          className={({ isActive }) => isActive ? 'active-link' : ''}
+        >
+          <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <FaCog /> Settings
           </li>
-        </Link>
+        </NavLink>
       </ul>
     </div>
   );

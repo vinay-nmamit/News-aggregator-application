@@ -12,19 +12,57 @@ body {
   display: flex;
 }
 
-body.light {
-  --text-color: #333;
-  --bg-color: #f8f9fa;
+/* ✅ Apply Dark Mode to Entire App */
+.dark-mode, 
+.dark-mode body, 
+.dark-mode html {
+  background-color: #222 !important;
+  color: #fff !important;
 }
 
-body.dark {
-  --text-color: #f8f9fa;
-  --bg-color: #121212;
+
+/* ✅ Override styles for components */
+.dark-mode .settings-container,
+.dark-mode .profile-section,
+.dark-mode .profile-header{
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.settings-container {
-  color: var(--text-color);
-  background-color: var(--bg-color);
+.dark-mode .sidebar {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.dark-mode .sidebar h2,
+.dark-mode .sidebar ul li,
+.dark-mode .sublist li {
+  color: #fff !important;
+}
+
+.dark-mode .container h1,
+.dark-mode .category-page h2 {
+  color: #fff !important;
+}
+
+/* Ensure cards have a dark background */
+.dark-mode .card {
+  background-color: #111 !important;
+  color: #fff !important;
+  border: 1px solid #333; /* Subtle border for contrast */
+}
+
+/* Ensure text inside cards is visible */
+.dark-mode .card h3,
+.dark-mode .card p,
+.dark-mode .card-text {
+  color: #ddd !important;
+}
+
+/* ✅ Modify buttons in dark mode */
+.dark-mode .save-btn {
+  background-color: #ffffff;
+  color: #000000;
 }
 
 
@@ -76,22 +114,6 @@ body.dark {
   margin-top: 1.5rem;
 }
 
-button {
-  width: 50%;
-  padding: 0.75rem;
-  background-color: #0d6efd;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-button:hover {
-  background-color: #0b5ed7;
-}
-
 .register {
   display: flex;
   justify-content: center;
@@ -102,37 +124,36 @@ button:hover {
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #1a1a1a;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
   padding: 20px;
   position: fixed;
   top: 0;
   left: 0;
   overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Adds subtle shadow on the right */
 }
+
 
 /* Active link styling */
 .active-link li {
-  background-color: #403d39;
-  color: #fff;
+  background-color: #ddd; /* Light mode background */
+  color: #000000;
   border-radius: 8px;
   padding: 12px;
 }
 
-/* Hover effect */
-li:hover {
-  background-color: #333;
-  transform: translateX(8px);
-  transition: background-color 0.2s ease, transform 0.2s ease;
+/* Ensure active link in dark mode stays consistent */
+.dark-mode .active-link li {
+  background-color: #222; /* Dark mode background */
+  color: #ffffff;
 }
-
-
 
 .sidebar h2 {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: #000000;
 }
 
 .sidebar ul {
@@ -148,12 +169,12 @@ li:hover {
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .sidebar ul li:hover {
-  background-color: #333;
+  background-color: #ddd;
   transform: translateX(8px);
+  transition: background-color, transform 0.5s ease;
 }
 
 .sidebar ul li svg {
@@ -167,11 +188,6 @@ li:hover {
   align-items: center;
 }
 
-.chevron {
-  margin-left: auto;
-  transition: transform 0.3s ease;
-}
-
 .sublist {
   padding-left: 20px;
   list-style-type: none;
@@ -182,14 +198,13 @@ li:hover {
 .sublist li {
   padding: 8px 12px;
   font-size: 16px;
-  color: #ddd;
+  color: #000000;
   cursor: pointer;
-  transition: background-color 0.2s ease, padding-left 0.2s ease;
 }
 
 .sublist li:hover {
-  background-color: #333;
-  padding-left: 16px;
+  transition: background-color, transform 0.5s ease;
+  padding-left: 10px;
 }
 
 /* ✅ Home container */
@@ -201,15 +216,15 @@ li:hover {
 }
 
 .container h1{
-  font-size: 2rem; /* Bigger font size */
+  font-size: 2rem; 
   font-weight: bold;
   text-align: center;
-  text-transform: capitalize; /* Capitalize first letter */
+  text-transform: capitalize; 
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 3px solid #020202; /* Adds a nice blue underline */
+  border-bottom: 3px solid #020202; 
   display: inline-block;
-  color: #222; /* Darker text color for better contrast */
+  color: #222; 
 }
 
 .content {
@@ -217,84 +232,25 @@ li:hover {
   padding: 20px;
 }
 
-/* ✅ Header container */
-.header {
-  display: flex;
-  width: calc(100vw - 300px); /* Adjust for sidebar */
-  align-items: center;
-  justify-content: space-between;
-  /* background-color: #0d6efd;  */
-  padding: 12px 20px;
-  box-sizing: border-box;
-}
-
-/* ✅ Search bar styling */
-.search-bar {
-  display: flex;
-  align-items: center;
-  border-radius: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.search-bar input {
-  flex: 1;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 24px 0 0 24px;
-  outline: none;
-  background-color: #333;
-  color: #fff;
-}
-
-.search-bar input::placeholder {
-  color: #bbb;
-}
-
-.search-bar button {
-  padding: 10px 20px;
-  background-color: #1a73e8;
-  color: #ffffff;
-  border: none;
-  border-radius: 0 24px 24px 0;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.search-bar button:hover {
-  background-color: #0b5ed7;
-}
-
-/* ✅ Settings container */
-.settings-container {
-  background-color: #333;
-  width: calc(100vw - 300px);
-  box-sizing: border-box;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-/* ✅ Profile Header */
+/* Settings styling */
+/* Profile Header */
 .profile-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #495057;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  color: #fff;
+  color: #000000;
 }
 
 /* ✅ Profile Picture */
 .profile-image {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #ddd;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -370,7 +326,7 @@ li:hover {
   content: "";
   width: 18px;
   height: 18px;
-  background-color: #fff;
+  background-color: #000000;
   position: absolute;
   top: 1px;
   left: 2px;
@@ -379,7 +335,7 @@ li:hover {
 }
 
 .theme-toggle input[type="checkbox"]:checked {
-  background-color: #0b5ed7;
+  background-color: #ddd;
 }
 
 .theme-toggle input[type="checkbox"]:checked::before {
@@ -400,13 +356,6 @@ li:hover {
 
 .dropdown:focus {
   border-color: #0b5ed7;
-}
-
-/* ✅ Responsive Design */
-@media (max-width: 768px) {
-  .profile-wrapper {
-    flex-direction: column;
-  }
 }
 
 
@@ -434,26 +383,6 @@ li:hover {
   transition: border-color 0.3s ease;
 }
 
-.form-group input:focus {
-  border-color: #0b5ed7;
-}
-
-/* ✅ Save Button */
-.save-btn {
-  background-color: #0b5ed7;
-  color: #fff;
-  padding: 10px 16px;
-  font-size: 16px;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.save-btn:hover {
-  background-color: #0a58ca;
-}
 
 /* ✅ Cards Section */
 .cards-section {
@@ -479,32 +408,16 @@ li:hover {
 .card h3 {
   font-size: 18px;
   font-weight: 600;
-  color: #0b5ed7;
+  color: #000000;
   margin-bottom: 8px;
 }
 
 .card p {
   font-size: 16px;
-  color: #555;
+  color: #000000;
 }
 
-/* ✅ Mobile Responsiveness */
-@media (max-width: 768px) {
-  .profile-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cards-section {
-    flex-direction: column;
-  }
-
-  .card {
-    width: 100%;
-  }
-}
-
-/* News container - Flexbox for wrapping */
+/* News container*/
 .news-container {
   display: flex;
   flex-wrap: wrap;
@@ -512,7 +425,7 @@ li:hover {
   justify-content: space-between;
 }
 
-/* News card - Consistent width for 3 per row */
+/* News card */
 .news-card {
   width: calc(33.33% - 20px); /* 3 cards per row */
   display: flex;
@@ -526,7 +439,6 @@ li:hover {
   transition: transform 0.2s ease-in-out;
 }
 
-/* Hover effect */
 .news-card:hover {
   transform: scale(1.02);
 }
@@ -540,9 +452,8 @@ li:hover {
   margin-bottom: 1rem;
 }
 
-/* Card body - Ensures uniform height for content */
 .card-body {
-  flex-grow: 1; /* Allows dynamic growth */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -565,35 +476,6 @@ li:hover {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* Show only 3 lines */
   -webkit-box-orient: vertical;
-}
-
-
-/* Button styling */
-.btn-primary {
-  margin-top: auto;
-  background-color: #007bff;
-  color: white;
-  text-align: center;
-  padding: 8px 12px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-/* 🔹 Responsive Design Fixes */
-@media (max-width: 1024px) {
-  .news-card {
-    width: calc(50% - 20px); /* 2 per row on tablets */
-  }
-}
-
-@media (max-width: 768px) {
-  .news-card {
-    width: 100%; /* 1 per row on mobile */
-  }
 }
 
 .category-page h2 {

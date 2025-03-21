@@ -6,18 +6,14 @@ function Settings() {
   const [username, setUsername] = useState("John Doe");
   const [password, setPassword] = useState("");
   const [theme, setTheme] = useState("light");
-  const [fontSize, setFontSize] = useState("16px");
 
-  // Load stored theme and font size from localStorage
+  // Load stored theme from localStorage
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
-    const savedFontSize = localStorage.getItem("fontSize") || "16px";
-
     setTheme(savedTheme);
-    setFontSize(savedFontSize);
 
-    document.body.className = savedTheme; // Apply theme to body
-    document.documentElement.style.fontSize = savedFontSize; // Apply font size
+    // ✅ Apply theme on page load
+    document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
   }, []);
 
   // Handle profile image upload
@@ -38,28 +34,19 @@ function Settings() {
     alert("Profile updated successfully!");
   };
 
-// Handle theme change
+  // Handle theme change
   const handleThemeChange = () => {
-  const newTheme = theme === "light" ? "dark" : "light";
-  setTheme(newTheme);
-  document.body.className = newTheme; // ✅ Apply theme class to body
-  localStorage.setItem("theme", newTheme);
-};
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
 
-
-  // Handle font size change
-  const handleFontSizeChange = (e) => {
-    const newSize = e.target.value;
-    setFontSize(newSize);
-    document.documentElement.style.fontSize = newSize;
-    localStorage.setItem("fontSize", newSize);
+    document.documentElement.classList.toggle("dark-mode", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
-    <div className="settings-container">
+    <div>
       {/* ✅ Profile Header */}
       <div className="profile-header">
-        <h1>Welcome, {username}</h1>
         <div className="profile-image">
           {profileImage ? (
             <img src={profileImage} alt="Profile" />
@@ -73,9 +60,10 @@ function Settings() {
             className="upload-input"
           />
         </div>
+        <h1>Welcome, {username}</h1>
       </div>
 
-      {/* ✅ Flex Container to Align Horizontally */}
+      {/* ✅ Profile & Personalization Sections */}
       <div className="profile-wrapper">
         {/* ✅ Profile Section */}
         <div className="profile-section">
@@ -98,16 +86,12 @@ function Settings() {
               placeholder="Enter new password"
             />
           </div>
-          <button className="save-btn" onClick={handleSave}>
-            Save Changes
-          </button>
+          <button className="btn btn-dark" onClick={handleSave}>Save Changes</button>
         </div>
 
         {/* ✅ Personalization Section */}
         <div className="profile-section">
           <h2>Personalization</h2>
-
-          {/* Theme Switch */}
           <div className="form-group">
             <div className="theme-toggle">
               <span>Light</span>
@@ -119,30 +103,16 @@ function Settings() {
               <span>Dark</span>
             </div>
           </div>
-
-          {/* Font Size Dropdown */}
-          <div className="form-group">
-            <label>Font Size</label>
-            <select
-              value={fontSize}
-              onChange={handleFontSizeChange}
-              className="dropdown"
-            >
-              <option value="14px">Small</option>
-              <option value="16px">Medium</option>
-              <option value="18px">Large</option>
-            </select>
-          </div>
         </div>
       </div>
 
-      {/* ✅ Saved and Liked Cards */}
-      <div className="cards-section">
-        <div className="card">
+      {/* ✅ Saved & Liked Items */}
+      <div className="profile-wrapper">
+        <div className="profile-section">
           <h3>Saved Items</h3>
           <p>You have 5 saved items.</p>
         </div>
-        <div className="card">
+        <div className="profile-section">
           <h3>Liked Items</h3>
           <p>You have 8 liked items.</p>
         </div>

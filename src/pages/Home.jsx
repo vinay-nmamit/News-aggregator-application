@@ -38,7 +38,7 @@ function Home() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleSearch}>
+          <button className="btn btn-dark" onClick={handleSearch}>
             Search
           </button>
         </div>

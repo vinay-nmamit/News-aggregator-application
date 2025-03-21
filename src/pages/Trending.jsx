@@ -29,7 +29,7 @@ function Trending() {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">Trending News</h2>
+      <h1 className="mb-4">Trending News</h1>
       <div className="news-container">
         {articles.map((article, index) => (
           <div className="card news-card" key={index}>

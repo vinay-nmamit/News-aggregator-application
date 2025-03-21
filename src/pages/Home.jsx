@@ -62,7 +62,7 @@ function Home() {
                   : "No description available"}
               </p>
 
-              <a href={article.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              <a href={article.url} target="_blank" rel="noopener noreferrer" className="btn btn-dark">
                 Read more
               </a>
             </div>

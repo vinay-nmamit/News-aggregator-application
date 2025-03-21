@@ -45,7 +45,7 @@ function Trending() {
                     : article.description
                   : "No description available"}
               </p>
-              <a href={article.url} target="_blank" className="btn btn-primary">
+              <a href={article.url} target="_blank" className="btn btn-dark">
                 Read More
               </a>
             </div>

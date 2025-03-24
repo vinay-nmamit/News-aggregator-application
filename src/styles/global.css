@@ -12,6 +12,13 @@ body {
   display: flex;
 }
 
+header, footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
 /* ✅ Apply Dark Mode to Entire App */
 .dark-mode, 
 .dark-mode body, 
@@ -146,7 +153,6 @@ body {
 /* Ensure active link in dark mode stays consistent */
 .dark-mode .active-link li {
   background-color: #222; /* Dark mode background */
-  color: #ffffff;
 }
 
 .sidebar h2 {
@@ -173,6 +179,12 @@ body {
 
 .sidebar ul li:hover {
   background-color: #ddd;
+  transform: translateX(8px);
+  transition: background-color, transform 0.5s ease;
+}
+
+.dark-mode .sidebar ul li:hover{
+  background-color: #222;
   transform: translateX(8px);
   transition: background-color, transform 0.5s ease;
 }
@@ -243,6 +255,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   color: #000000;
+  width: calc(100vw - 300px);
 }
 
 /* ✅ Profile Picture */
@@ -297,6 +310,10 @@ body {
   font-weight: 600;
   color: #333;
   margin-bottom: 16px;
+}
+
+.dark-mode .profile-section h2 {
+  color: #fff;
 }
 
 .profile-section:hover {

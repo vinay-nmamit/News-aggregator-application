@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { registerUser, loginUser } from '../API/api';
 import '../styles/global.css';
+import { UserContext } from '../Context/UserContext';
 
 function Login() {
+  const { username,setUsername } = useContext(UserContext);
+  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showRegister, setShowRegister] = useState(false);
-  const navigate = useNavigate(); // For redirecting after login
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (showRegister) {
@@ -17,12 +21,37 @@ function Login() {
         alert('Passwords do not match');
         return;
       }
-      console.log('Registering:', { email, password });
-      // Add register logic here
+
+      try {
+        const response = await registerUser({ username, email, password });
+
+        if (response.status === 200) {
+          alert('Registration successful!');
+          const registeredUser = response.data;
+          localStorage.setItem('username', registeredUser.username);
+          localStorage.setItem('email', registeredUser.email);
+          setUsername(registeredUser.username);
+          navigate(`/${registeredUser.username}`);
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('Registration failed. Try a different email.');
+      }
     } else {
-      console.log('Logging in:', { email, password });
-      // Add login logic here (API call, etc.)
-      navigate('/home');
+      try {
+        const response = await loginUser({ email, password });
+
+        if (response.status === 200) {
+          const user = response.data;
+          localStorage.setItem('username', user.username);
+          localStorage.setItem('email', user.email);
+          setUsername(user.username);
+          navigate(`/${user.username}`);
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Invalid email or password.');
+      }
     }
   };
 
@@ -34,6 +63,19 @@ function Login() {
             {showRegister ? 'Register' : 'Welcome'}
           </h2>
           <form onSubmit={handleSubmit}>
+            {showRegister && (
+              <div className="mb-3">
+                <label className="form-label">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  autoComplete="username"
+                />
+              </div>
+            )}
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input
@@ -42,6 +84,7 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                autoComplete="email"
               />
             </div>
             <div className="mb-3">
@@ -52,6 +95,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                autoComplete="current-password"
               />
             </div>
             {showRegister && (

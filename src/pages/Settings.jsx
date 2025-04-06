@@ -1,44 +1,64 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import "../styles/global.css";
+import { UserContext } from "../Context/UserContext";
 
 function Settings() {
-  const [profileImage, setProfileImage] = useState(null);
-  const [username, setUsername] = useState("John Doe");
+  const { username, setUsername } = useContext(UserContext);
   const [password, setPassword] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
   const [theme, setTheme] = useState("light");
 
-  // Load stored theme from localStorage
+  const email = localStorage.getItem("email"); // ✅ Email stored after login
+
+  // Load theme and user data
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
-
-    // ✅ Apply theme on page load
     document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
-  }, []);
 
-  // Handle profile image upload
+    // ✅ Fetch user details from backend
+    if (email) {
+      axios.get(`http://localhost:8080/api/users/profile?email=${email}`)
+        .then(res => {
+          const user = res.data;
+          setUsername(user.username);
+          setProfileImage(user.profileImage);
+        })
+        .catch(err => console.error("Error fetching profile:", err));
+    }
+  }, [email, setUsername]);
+
+  // Convert image to base64 and set it
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-      };
+      reader.onloadend = () => setProfileImage(reader.result);
       reader.readAsDataURL(file);
     }
   };
 
-  // Handle saving profile details
+  // Save changes to backend
   const handleSave = () => {
-    console.log("Saved:", { username, password });
-    alert("Profile updated successfully!");
+    axios.put(`http://localhost:8080/api/users/profile?email=${email}`, {
+      username,
+      password,
+      profileImage
+    })
+      .then(res => {
+        alert("Profile updated successfully!");
+        setPassword(""); // Clear password field
+      })
+      .catch(err => {
+        console.error("Update failed:", err);
+        alert("Failed to update profile");
+      });
   };
 
-  // Handle theme change
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-
     document.documentElement.classList.toggle("dark-mode", newTheme === "dark");
     localStorage.setItem("theme", newTheme);
   };

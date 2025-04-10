@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/global.css";
-
+import NewsCard from "../components/NewsCard";
 
 function Home() {
   const [news, setNews] = useState([]);
@@ -46,27 +46,7 @@ function Home() {
 
       <div className="news-container">
         {news.map((article, index) => (
-          <div key={index} className="news-card card">
-            <img
-              src={article.urlToImage || "https://via.placeholder.com/150"}
-              className="card-img-top"
-              alt={article.title}
-            />
-            <div className="card-body">
-              <h5 className="card-title">{article.title}</h5>
-              <p className="card-text">
-                {article.description
-                  ? article.description.length > 100
-                    ? article.description.substring(0, 100) + "..."
-                    : article.description
-                  : "No description available"}
-              </p>
-
-              <a href={article.url} target="_blank" rel="noopener noreferrer" className="btn btn-dark">
-                Read more
-              </a>
-            </div>
-          </div>
+          <NewsCard key={index} article={article} index={index} />
         ))}
       </div>
     </div>

@@ -1,59 +1,56 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/global.css";
+import NewsCard from "../components/NewsCard";
 
-function Trending() {
-  const [articles, setArticles] = useState([]);
+function Home() {
+  const [news, setNews] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const fetchTrendingNews = async () => {
-      try {
-        const response = await axios.get(
-          `https://newsapi.org/v2/everything?q=trending&sortBy=publishedAt&apiKey=1e2f84889f19483d96df98835b09f9a4`
-        );                
-        
-        // Filter out articles without images or descriptions
-        const validArticles = response.data.articles.filter(
-          (article) => article.urlToImage && article.description
-        );
-  
-        setArticles(validArticles.slice(0, 20)); // Ensure at most 20 articles are displayed
-      } catch (error) {
-        console.error("Error fetching trending news:", error);
-      }
-    };
-  
-    fetchTrendingNews();
+    fetchNews();
   }, []);
-  
+
+  const fetchNews = async (query = "latest") => {
+    try {
+      const response = await axios.get(
+        `https://newsapi.org/v2/everything?q=${query}&apiKey=1e2f84889f19483d96df98835b09f9a4`
+      );
+      setNews(response.data.articles);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+    }
+  };
+
+  const handleSearch = () => {
+    fetchNews(searchTerm);
+  };
 
   return (
     <div className="container mt-4">
-      <h1 className="mb-4">Trending News</h1>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1>Latest News</h1>
+        <div className="input-group w-50">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search news..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button className="btn btn-dark" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
+      </div>
+
       <div className="news-container">
-        {articles.map((article, index) => (
-          <div className="card news-card" key={index}>
-            {article.urlToImage && (
-              <img src={article.urlToImage} className="card-img-top" alt="news" />
-            )}
-            <div className="card-body">
-              <h5 className="card-title">{article.title}</h5>
-              <p className="card-text">
-                {article.description
-                  ? article.description.length > 100
-                    ? article.description.substring(0, 100) + "..."
-                    : article.description
-                  : "No description available"}
-              </p>
-              <a href={article.url} target="_blank" className="btn btn-dark">
-                Read More
-              </a>
-            </div>
-          </div>
+        {news.map((article, index) => (
+          <NewsCard key={index} article={article} index={index} />
         ))}
       </div>
     </div>
   );
 }
 
-export default Trending;
+export default Home;

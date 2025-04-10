@@ -23,6 +23,7 @@ function Login() {
       }
 
       try {
+        console.log("Sending to backend:", { username, email, password });
         const response = await registerUser({ username, email, password });
 
         if (response.status === 200) {

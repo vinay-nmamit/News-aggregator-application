@@ -41,6 +41,7 @@ function CategoryPage() {
           <p className="text-center">No news available</p>
         )}
       </div>
+      {/*  */}
     </div>
   );
 }

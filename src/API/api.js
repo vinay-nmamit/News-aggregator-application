@@ -18,4 +18,14 @@ export const registerUser = async (userData) => {
     console.log('Login Response:', response);
     return response;
   };
+
+  export const likeArticle = async (email, article) => {
+    const response = await API.put(`/${email}/like-article`, article);
+    return response;
+  };
+
+  export const getLikedArticles = async (email) => {
+    const response = await API.get(`/${email}/liked-articles`);
+    return response.data;
+  };
   

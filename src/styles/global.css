@@ -507,3 +507,11 @@ header, footer {
   color: #222; /* Darker text color for better contrast */
 }
 
+.icon-button img {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.icon-button:hover img {
+  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(17%) sepia(98%) saturate(7486%) hue-rotate(201deg) brightness(98%) contrast(101%);
+}

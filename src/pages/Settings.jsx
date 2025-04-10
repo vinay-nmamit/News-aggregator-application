@@ -1,35 +1,37 @@
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import "../styles/global.css";
-import { UserContext } from "../Context/UserContext";
+import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import '../styles/global.css';
+import { UserContext } from '../Context/UserContext';
+import NewsCard from '../components/NewsCard';
 
 function Settings() {
   const { username, setUsername } = useContext(UserContext);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [profileImage, setProfileImage] = useState(null);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState('light');
+  const [likedArticles, setLikedArticles] = useState([]);
 
-  const email = localStorage.getItem("email"); // ✅ Email stored after login
+  const email = localStorage.getItem('email');
 
-  // Load theme and user data
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
-    document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
+    document.documentElement.classList.toggle('dark-mode', savedTheme === 'dark');
 
-    // ✅ Fetch user details from backend
     if (email) {
       axios.get(`http://localhost:8080/api/users/profile?email=${email}`)
-        .then(res => {
-          const user = res.data;
+        .then(({ data: user }) => {
           setUsername(user.username);
           setProfileImage(user.profileImage);
         })
-        .catch(err => console.error("Error fetching profile:", err));
+        .catch(err => console.error('Error fetching profile:', err));
+
+      axios.get(`http://localhost:8080/api/users/${email}/liked-articles`)
+        .then(({ data }) => setLikedArticles(data))
+        .catch(err => console.error('Error fetching liked articles:', err));
     }
   }, [email, setUsername]);
 
-  // Convert image to base64 and set it
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -39,33 +41,31 @@ function Settings() {
     }
   };
 
-  // Save changes to backend
   const handleSave = () => {
     axios.put(`http://localhost:8080/api/users/profile?email=${email}`, {
       username,
       password,
       profileImage
     })
-      .then(res => {
-        alert("Profile updated successfully!");
-        setPassword(""); // Clear password field
+      .then(() => {
+        alert('Profile updated successfully!');
+        setPassword('');
       })
       .catch(err => {
-        console.error("Update failed:", err);
-        alert("Failed to update profile");
+        console.error('Update failed:', err);
+        alert('Failed to update profile');
       });
   };
 
   const handleThemeChange = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
+    const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    document.documentElement.classList.toggle("dark-mode", newTheme === "dark");
-    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle('dark-mode', newTheme === 'dark');
+    localStorage.setItem('theme', newTheme);
   };
 
   return (
     <div>
-      {/* ✅ Profile Header */}
       <div className="profile-header">
         <div className="profile-image">
           {profileImage ? (
@@ -83,9 +83,7 @@ function Settings() {
         <h1>Welcome, {username}</h1>
       </div>
 
-      {/* ✅ Profile & Personalization Sections */}
       <div className="profile-wrapper">
-        {/* ✅ Profile Section */}
         <div className="profile-section">
           <h2>Update Profile</h2>
           <div className="form-group">
@@ -109,7 +107,6 @@ function Settings() {
           <button className="btn btn-dark" onClick={handleSave}>Save Changes</button>
         </div>
 
-        {/* ✅ Personalization Section */}
         <div className="profile-section">
           <h2>Personalization</h2>
           <div className="form-group">
@@ -117,7 +114,7 @@ function Settings() {
               <span>Light</span>
               <input
                 type="checkbox"
-                checked={theme === "dark"}
+                checked={theme === 'dark'}
                 onChange={handleThemeChange}
               />
               <span>Dark</span>
@@ -126,15 +123,18 @@ function Settings() {
         </div>
       </div>
 
-      {/* ✅ Saved & Liked Items */}
       <div className="profile-wrapper">
         <div className="profile-section">
-          <h3>Saved Items</h3>
-          <p>You have 5 saved items.</p>
-        </div>
-        <div className="profile-section">
-          <h3>Liked Items</h3>
-          <p>You have 8 liked items.</p>
+          <h3>Your Liked Articles</h3>
+          {likedArticles.length > 0 ? (
+            <div className="liked-articles-container">
+              {likedArticles.map(article => (
+                <NewsCard key={article.id} article={article} />
+              ))}
+            </div>
+          ) : (
+            <p>You haven't liked any articles yet.</p>
+          )}
         </div>
       </div>
     </div>

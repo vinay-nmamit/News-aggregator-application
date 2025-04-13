@@ -1,13 +1,12 @@
-import { useState,useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser, loginUser } from '../API/api';
 import '../styles/global.css';
 import { UserContext } from '../Context/UserContext';
 
 function Login() {
-  const { username,setUsername } = useContext(UserContext);
-  // const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const { username, setUsername, setEmail } = useContext(UserContext);  // Added setEmail here
+  const [emailInput, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showRegister, setShowRegister] = useState(false);
@@ -23,15 +22,15 @@ function Login() {
       }
 
       try {
-        console.log("Sending to backend:", { username, email, password });
-        const response = await registerUser({ username, email, password });
+        console.log("Sending to backend:", { username, email: emailInput, password });
+        const response = await registerUser({ username, email: emailInput, password });
 
         if (response.status === 200) {
-          alert('Registration successful!');
           const registeredUser = response.data;
           localStorage.setItem('username', registeredUser.username);
           localStorage.setItem('email', registeredUser.email);
           setUsername(registeredUser.username);
+          setEmail(registeredUser.email);  // Save email in context
           navigate(`/${registeredUser.username}`);
         }
       } catch (error) {
@@ -40,13 +39,14 @@ function Login() {
       }
     } else {
       try {
-        const response = await loginUser({ email, password });
+        const response = await loginUser({ email: emailInput, password });
 
         if (response.status === 200) {
           const user = response.data;
           localStorage.setItem('username', user.username);
           localStorage.setItem('email', user.email);
           setUsername(user.username);
+          setEmail(user.email);  // Save email in context
           navigate(`/${user.username}`);
         }
       } catch (error) {
@@ -82,8 +82,8 @@ function Login() {
               <input
                 type="email"
                 className="form-control"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
                 required
                 autoComplete="email"
               />

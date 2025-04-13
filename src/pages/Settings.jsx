@@ -7,55 +7,73 @@ import NewsCard from '../components/NewsCard';
 function Settings() {
   const { username, setUsername } = useContext(UserContext);
   const [password, setPassword] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
   const [theme, setTheme] = useState('light');
   const [likedArticles, setLikedArticles] = useState([]);
-
-  const email = localStorage.getItem('email');
+  const [savedArticles, setSavedArticles] = useState([]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     document.documentElement.classList.toggle('dark-mode', savedTheme === 'dark');
 
-    if (email) {
-      axios.get(`http://localhost:8080/api/users/profile?email=${email}`)
+    if (username) {
+      // Fetch user profile by username
+      axios.get(`http://localhost:8080/api/users/profile/${username}`)
         .then(({ data: user }) => {
           setUsername(user.username);
-          setProfileImage(user.profileImage);
         })
         .catch(err => console.error('Error fetching profile:', err));
 
-      axios.get(`http://localhost:8080/api/users/${email}/liked-articles`)
+      // Fetch liked articles
+      axios.get(`http://localhost:8080/api/users/${username}/liked-articles`)
         .then(({ data }) => setLikedArticles(data))
-        .catch(err => console.error('Error fetching liked articles:', err));
-    }
-  }, [email, setUsername]);
+        .catch(err => {
+          console.error('Error fetching liked articles:', err);
+          setLikedArticles([]);
+        });
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setProfileImage(reader.result);
-      reader.readAsDataURL(file);
+      // Fetch saved articles
+      axios.get(`http://localhost:8080/api/users/${username}/saved-articles`)
+        .then(({ data }) => setSavedArticles(data))
+        .catch(err => {
+          console.error('Error fetching saved articles:', err);
+          setSavedArticles([]);
+        });
     }
-  };
+  }, [username, setUsername]);
 
   const handleSave = () => {
-    axios.put(`http://localhost:8080/api/users/profile?email=${email}`, {
-      username,
-      password,
-      profileImage
+  if (!username) {
+    alert('Username is required.');
+    return;
+  }
+
+  if (!password) {
+    alert('Please enter a new password');
+    return;
+  }
+
+  axios.put(`http://localhost:8080/api/users/profile/${username}`, {
+    username,
+    password
+  })
+    .then(() => {
+      alert('Profile updated successfully!');
+      setPassword('');
     })
-      .then(() => {
-        alert('Profile updated successfully!');
-        setPassword('');
-      })
-      .catch(err => {
-        console.error('Update failed:', err);
-        alert('Failed to update profile');
-      });
-  };
+    .catch(err => {
+      console.error('Update failed:', err);
+      if (err.response) {
+        if (err.response.status === 404) {
+          alert('Profile update endpoint not found. Please check backend service.');
+        } else {
+          alert(`Failed to update profile: ${err.response.data.message || err.message}`);
+        }
+      } else {
+        alert('Network error. Please check your connection.');
+      }
+    });
+};
 
   const handleThemeChange = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -67,19 +85,6 @@ function Settings() {
   return (
     <div>
       <div className="profile-header">
-        <div className="profile-image">
-          {profileImage ? (
-            <img src={profileImage} alt="Profile" />
-          ) : (
-            <span className="placeholder"></span>
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="upload-input"
-          />
-        </div>
         <h1>Welcome, {username}</h1>
       </div>
 
@@ -127,13 +132,28 @@ function Settings() {
         <div className="profile-section">
           <h3>Your Liked Articles</h3>
           {likedArticles.length > 0 ? (
-            <div className="liked-articles-container">
+            <div className="liked-articles-container d-flex w-100 flex-wrap">
               {likedArticles.map(article => (
                 <NewsCard key={article.id} article={article} />
               ))}
             </div>
           ) : (
             <p>You haven't liked any articles yet.</p>
+          )}
+        </div>
+      </div>
+
+      <div className="profile-wrapper">
+        <div className="profile-section">
+          <h3>Your Saved Articles</h3>
+          {savedArticles.length > 0 ? (
+            <div className="saved-articles-container d-flex w-100 flex-wrap">
+              {savedArticles.map(article => (
+                <NewsCard key={article.id} article={article} />
+              ))}
+            </div>
+          ) : (
+            <p>You haven't saved any articles yet.</p>
           )}
         </div>
       </div>

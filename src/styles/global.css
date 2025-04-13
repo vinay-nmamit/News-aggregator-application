@@ -515,3 +515,28 @@ header, footer {
   transform: scale(1.1);
   filter: brightness(0) saturate(100%) invert(17%) sepia(98%) saturate(7486%) hue-rotate(201deg) brightness(98%) contrast(101%);
 }
+
+
+.news-card {
+  /* background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 10px; */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.news-card.dark-mode {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
+}
+
+.news-card img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body .btn {
+  margin-right: 10px;
+}

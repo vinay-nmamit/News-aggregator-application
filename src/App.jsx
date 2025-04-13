@@ -9,10 +9,11 @@ import Layout from "./components/Layout";
 import { UserContext } from "./Context/UserContext";
 
 function App() {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(() => localStorage.getItem('username') || '');
+  const [email, setEmail] = useState(() => localStorage.getItem('email') || '');
 
   return (
-    <UserContext.Provider value={{ username, setUsername }}>
+    <UserContext.Provider value={{ username, setUsername, email, setEmail }}>
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />

@@ -20,12 +20,12 @@ export const registerUser = async (userData) => {
   };
 
   export const likeArticle = async (email, article) => {
-    const response = await API.put(`/${email}/like-article`, article);
+    const response = await API.put(`${email}/like-article`, article);
     return response;
   };
 
   export const getLikedArticles = async (email) => {
-    const response = await API.get(`/${email}/liked-articles`);
+    const response = await API.get(`${email}/liked-articles`);
     return response.data;
   };
   

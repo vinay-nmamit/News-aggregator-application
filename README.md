@@ -71,3 +71,4 @@ Contributions are welcome! To contribute:
 For any questions or suggestions, feel free to reach out:
 
 - **GitHub:** [vinay-nmamit](https://github.com/vinay-nmamit)
+- - **For Backend Refer this Repository:** https://github.com/kishor068/NewsApp-Backend-new.git
